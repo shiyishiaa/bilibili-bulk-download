@@ -1,3 +1,4 @@
+import { md5 } from './runtime-lib'
 
 /**
  * 获取文件并返回 Blob URL
@@ -127,11 +128,22 @@ function prettyBytes(bytes, decimalPlaces = 2) {
     return `${formatted} ${units[unitIndex]}`;
 }
 
+/**
+ * 创建 API 签名数据
+ */
+function getSignData(param, sec) {
+    return {
+        ...param,
+        sign: md5(`${Object.entries(param).filter(([k]) => k !== 'sign').map(e => `${e[0]}=${e[1]}`).join('&')}${sec}`)
+    }
+}
+
 export {
     toBlobURL,
     downloadBlob,
     downloadBlobURL,
     fetchFile,
     fetchFileWithProgress,
-    prettyBytes
+    prettyBytes,
+    getSignData
 }

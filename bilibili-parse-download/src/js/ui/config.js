@@ -27,6 +27,8 @@ const config = {
     aria2c_addition_parameters: '',
     ariang_host: 'http://ariang.injahow.cn/',
     ariang_dir: '',
+    download_api: 'http://localhost:16880/download',
+    download_api_secret: '',
     auto_download: '0',
     video_quality: '0',
     danmaku_speed: '15',

@@ -5,7 +5,7 @@ import { api } from './api'
 import { video } from './video'
 import { JSZip } from './runtime-lib'
 import { ffmpeg } from './ffmpeg'
-import { downloadBlob, downloadBlobURL, prettyBytes } from './common'
+import { downloadBlob, downloadBlobURL, getSignData, prettyBytes } from './common'
 
 function rpc_type() {
     if (config.rpc_domain.startsWith('https://') || config.rpc_domain.match(/localhost|127\.0\.0\.1/)) {
@@ -226,31 +226,37 @@ function download_all() {
         if (!h) {
             return
         }
-        let timer1 = null, timer2 = null
-        let old_h = h, change_count = 0, not_change_count = 0
+        let timer1 = null, timer2 = null, show_info = true
+        let old_h = h, change_count = 0, not_change_count = 0, load_down = true
         timer1 = setInterval(() => {
-            $('#playlist-video-action-list').scrollTop($('#playlist-video-action-list')[0].scrollHeight)
-            setTimeout(() => {
+            if (load_down) {
+                $('#playlist-video-action-list').scrollTop($('#playlist-video-action-list')[0].scrollHeight)
+            } else {
                 $('#playlist-video-action-list').scrollTop(0)
-            }, 100)
-            if (not_change_count > 6) {
+            }
+            load_down = !load_down
+            if (not_change_count > 12) {
                 clearInterval(timer1)
             }
-        }, 1000)
+        }, 1500)
         timer2 = setInterval(() => {
             h = $('#playlist-video-action-list')[0].scrollHeight
             if (h > old_h) {
+                !change_count && MessageBox.confirm('正在加载视频列表，请稍后...', null, () => {
+                    clearInterval(timer1)
+                    clearInterval(timer2)
+                })
                 change_count++
-                MessageBox.alert('正在加载视频列表，请稍后...')
+                not_change_count = 0
             } else {
                 not_change_count++
             }
             old_h = h
-            if (not_change_count > 6) {
+            if (not_change_count > 12) {
                 clearInterval(timer1)
                 clearInterval(timer2)
-                Message.info('视频列表加载结束')
                 if (change_count > 0) {
+                    Message.info('视频列表加载结束')
                     download_all()
                 }
             }
@@ -568,9 +574,11 @@ function open_ariang(rpc) {
     a.style.display = 'none'
     a.onclick = () => {
         window.bp_aria2_window = window.open(config.ariang_host)
-        setTimeout(() => { // for safari
-            window.bp_aria2_window.location.href = config.ariang_host + hash_tag
-        }, 500)
+        if (hash_tag) {
+            setTimeout(() => { // for safari
+                window.bp_aria2_window.location.href = config.ariang_host + hash_tag
+            }, 500)
+        }
     }
     document.body.appendChild(a)
     a.click()
@@ -751,6 +759,27 @@ function download_blob_merge(video_url, audio_url, filename) {
         download_blob_merge_clicked = false
     })
 
+}
+
+/**
+ * api
+ */
+function download_api(url, filename) {
+    const api = config.download_api
+    const api_sec = config.download_api_secret
+    if (!api) {
+        Message.warning('请配置下载接口')
+        return
+    }
+    const data = { filename, ts: Date.now(), url }
+    ajax({
+        url: api,
+        type: 'POST',
+        data: api_sec ? getSignData(data, api_sec) : data,
+    }).then(res => {
+        console.info('download_api res:', res)
+    })
+    Message.success('请求已发送')
 }
 
 /**
@@ -984,6 +1013,8 @@ function download(url, filename, type) {
         download_blob(url, filename)
     } else if (type === 'rpc') {
         download_rpc(url, filename, null, rpc_type())
+    } else if (type === 'api') {
+        download_api(url, filename)
     }
 }
 

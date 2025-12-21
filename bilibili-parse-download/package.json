@@ -1,6 +1,6 @@
 {
   "name": "bpd-user-js",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "a script to download bilibli video",
   "main": "dist/bilibili-parse-download.user.js",
   "files": [
@@ -28,6 +28,7 @@
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.4",
+    "baseline-browser-mapping": "^2.9.11",
     "css-loader": "^6.7.1",
     "git-revision-webpack-plugin": "^5.0.0",
     "html-loader": "^3.1.0",

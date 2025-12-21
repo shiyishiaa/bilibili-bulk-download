@@ -142,21 +142,21 @@ class Video extends VideoBase {
     }
 
     total() {
-        if (this.epList.length > 1) {
+        if (this.epList.length) {
             return this.video_list.length
         }
         return this.state.videoData.pages.length
     }
 
     title(p) {
-        if (this.epList.length > 1 && p) {
+        if (this.epList.length && p) {
             return this.video_list[this.id(p)].title
         }
         return this.state.videoData.pages[this.id(p)].part
     }
 
     filename(p) {
-        if (this.epList.length > 1 && p) {
+        if (this.epList.length && p) {
             return this.title(p).replace(/[\/\\:*?"<>|]+/g, '')
         }
         const id = this.id(p)
@@ -166,7 +166,7 @@ class Video extends VideoBase {
     }
 
     getName() {
-        if (this.epList.length > 1) {
+        if (this.epList.length) {
             // 集合视频
             return this.state.sectionsInfo.title
         }
@@ -174,24 +174,24 @@ class Video extends VideoBase {
     }
 
     aid(p) {
-        if (this.epList.length > 1 && p) {
+        if (this.epList.length && p) {
             return this.video_list[this.id(p)].aid
         }
-        return this.state.videoData.aid
+        return this.state.aid || this.state.videoData.aid
     }
 
     bvid(p) {
-        if (this.epList.length > 1 && p) {
+        if (this.epList.length && p) {
             return this.video_list[this.id(p)].bvid
         }
-        return this.state.videoData.bvid
+        return this.state.bvid || this.state.videoData.bvid
     }
 
     cid(p) {
-        if (this.epList.length > 1 && p) {
+        if (this.epList.length && p) {
             return this.video_list[this.id(p)].cid
         }
-        return this.state.videoData.pages[this.id(p)].cid
+        return this.state.cid || this.state.videoData.pages[this.id(p)].cid
     }
 }
 
@@ -199,6 +199,7 @@ class VideoList extends VideoBase {
 
     constructor(main_title, state) {
         super('video', main_title, state)
+        // ! state: {p, videoData, resourceList}
         this.video = new Video(state.videoData.title, state)
         const resourceList = state.resourceList || []
         const video_list = []

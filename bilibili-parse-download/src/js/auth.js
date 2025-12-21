@@ -2,8 +2,9 @@ import { config } from './ui/config'
 import { store } from './store'
 import { Message, MessageBox } from './ui/message'
 import { _ajax, ajax } from './utils/ajax'
-import { QRCode, md5 } from './utils/runtime-lib'
+import { QRCode } from './utils/runtime-lib'
 import { getCookie } from './utils/cookie'
+import { getSignData } from './utils/common'
 
 class Auth {
     constructor() {
@@ -61,13 +62,6 @@ class Auth {
         store.set('pre_base_api', config.base_api)
     }
 
-    makeAPIData(param, sec) {
-        return {
-            ...param,
-            sign: md5(`${Object.entries(param).map(e => `${e[0]}=${e[1]}`).join('&')}${sec}`)
-        }
-    }
-
     _login(resolve) {
         if (this.auth_clicked) {
             Message.miaow()
@@ -77,7 +71,7 @@ class Auth {
         ajax({
             url: 'https://passport.bilibili.com/x/passport-tv-login/qrcode/auth_code',
             type: 'POST',
-            data: this.makeAPIData({
+            data: getSignData({
                 appkey: this.TV_KEY,
                 csrf: getCookie('bili_jct') || '',
                 local_id: '0',
@@ -123,7 +117,7 @@ class Auth {
                 _ajax({
                     url: `https://passport.bilibili.com/x/passport-tv-login/qrcode/poll`,
                     type: 'POST',
-                    data: this.makeAPIData({
+                    data: getSignData({
                         appkey: this.TV_KEY,
                         auth_code: auth_code,
                         csrf: getCookie('bili_jct') || '',
@@ -164,7 +158,7 @@ class Auth {
                 _ajax({
                     url: `https://passport.bilibili.com/x/passport-tv-login/qrcode/poll`,
                     type: 'POST',
-                    data: this.makeAPIData({
+                    data: getSignData({
                         appkey: this.TV_KEY,
                         auth_code: auth_code,
                         csrf: getCookie('bili_jct') || '',

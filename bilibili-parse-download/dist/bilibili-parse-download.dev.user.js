@@ -563,7 +563,7 @@ var Video = /*#__PURE__*/function (_VideoBase) {
   video_base_createClass(Video, [{
     key: "total",
     value: function total() {
-      if (this.epList.length > 1) {
+      if (this.epList.length) {
         return this.video_list.length;
       }
       return this.state.videoData.pages.length;
@@ -571,7 +571,7 @@ var Video = /*#__PURE__*/function (_VideoBase) {
   }, {
     key: "title",
     value: function title(p) {
-      if (this.epList.length > 1 && p) {
+      if (this.epList.length && p) {
         return this.video_list[this.id(p)].title;
       }
       return this.state.videoData.pages[this.id(p)].part;
@@ -579,7 +579,7 @@ var Video = /*#__PURE__*/function (_VideoBase) {
   }, {
     key: "filename",
     value: function filename(p) {
-      if (this.epList.length > 1 && p) {
+      if (this.epList.length && p) {
         return this.title(p).replace(/[\/\\:*?"<>|]+/g, '');
       }
       var id = this.id(p);
@@ -590,7 +590,7 @@ var Video = /*#__PURE__*/function (_VideoBase) {
   }, {
     key: "getName",
     value: function getName() {
-      if (this.epList.length > 1) {
+      if (this.epList.length) {
         // 集合视频
         return this.state.sectionsInfo.title;
       }
@@ -599,26 +599,26 @@ var Video = /*#__PURE__*/function (_VideoBase) {
   }, {
     key: "aid",
     value: function aid(p) {
-      if (this.epList.length > 1 && p) {
+      if (this.epList.length && p) {
         return this.video_list[this.id(p)].aid;
       }
-      return this.state.videoData.aid;
+      return this.state.aid || this.state.videoData.aid;
     }
   }, {
     key: "bvid",
     value: function bvid(p) {
-      if (this.epList.length > 1 && p) {
+      if (this.epList.length && p) {
         return this.video_list[this.id(p)].bvid;
       }
-      return this.state.videoData.bvid;
+      return this.state.bvid || this.state.videoData.bvid;
     }
   }, {
     key: "cid",
     value: function cid(p) {
-      if (this.epList.length > 1 && p) {
+      if (this.epList.length && p) {
         return this.video_list[this.id(p)].cid;
       }
-      return this.state.videoData.pages[this.id(p)].cid;
+      return this.state.cid || this.state.videoData.pages[this.id(p)].cid;
     }
   }]);
   return Video;
@@ -630,6 +630,7 @@ var VideoList = /*#__PURE__*/function (_VideoBase2) {
     var _this3;
     video_base_classCallCheck(this, VideoList);
     _this3 = _super2.call(this, 'video', main_title, state);
+    // ! state: {p, videoData, resourceList}
     _this3.video = new Video(state.videoData.title, state);
     var resourceList = state.resourceList || [];
     var video_list = [];
@@ -2224,8 +2225,21 @@ function common_regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { 
 function common_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return common_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (common_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, common_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, common_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), common_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", common_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), common_regeneratorDefine2(u), common_regeneratorDefine2(u, o, "Generator"), common_regeneratorDefine2(u, n, function () { return this; }), common_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (common_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function common_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } common_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { common_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, common_regeneratorDefine2(e, r, n, t); }
 function common_OverloadYield(e, d) { this.v = e, this.k = d; }
+function common_slicedToArray(r, e) { return common_arrayWithHoles(r) || common_iterableToArrayLimit(r, e) || common_unsupportedIterableToArray(r, e) || common_nonIterableRest(); }
+function common_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function common_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return common_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? common_arrayLikeToArray(r, a) : void 0; } }
+function common_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) { n[e] = r[e]; } return n; }
+function common_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0) { ; } } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function common_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function common_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function common_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? common_ownKeys(Object(t), !0).forEach(function (r) { common_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : common_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function common_defineProperty(e, r, t) { return (r = common_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function common_toPropertyKey(t) { var i = common_toPrimitive(t, "string"); return "symbol" == common_typeof(i) ? i : i + ""; }
+function common_toPrimitive(t, r) { if ("object" != common_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != common_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function common_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function common_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { common_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { common_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
 /**
  * 获取文件并返回 Blob URL
  * @param {string} url - 文件 URL
@@ -2434,6 +2448,21 @@ function prettyBytes(bytes) {
   // 保留指定小数位
   var formatted = size.toFixed(decimalPlaces);
   return "".concat(formatted, " ").concat(units[unitIndex]);
+}
+
+/**
+ * 创建 API 签名数据
+ */
+function getSignData(param, sec) {
+  return common_objectSpread(common_objectSpread({}, param), {}, {
+    sign: md5("".concat(Object.entries(param).filter(function (_ref2) {
+      var _ref3 = common_slicedToArray(_ref2, 1),
+        k = _ref3[0];
+      return k !== 'sign';
+    }).map(function (e) {
+      return "".concat(e[0], "=").concat(e[1]);
+    }).join('&')).concat(sec))
+  });
 }
 
 ;// ./src/js/utils/ffmpeg.js
@@ -2852,33 +2881,41 @@ function download_all() {
       return;
     }
     var timer1 = null,
-      timer2 = null;
+      timer2 = null,
+      show_info = true;
     var old_h = h,
       change_count = 0,
-      not_change_count = 0;
+      not_change_count = 0,
+      load_down = true;
     timer1 = setInterval(function () {
-      $('#playlist-video-action-list').scrollTop($('#playlist-video-action-list')[0].scrollHeight);
-      setTimeout(function () {
+      if (load_down) {
+        $('#playlist-video-action-list').scrollTop($('#playlist-video-action-list')[0].scrollHeight);
+      } else {
         $('#playlist-video-action-list').scrollTop(0);
-      }, 100);
-      if (not_change_count > 6) {
+      }
+      load_down = !load_down;
+      if (not_change_count > 12) {
         clearInterval(timer1);
       }
-    }, 1000);
+    }, 1500);
     timer2 = setInterval(function () {
       h = $('#playlist-video-action-list')[0].scrollHeight;
       if (h > old_h) {
+        !change_count && MessageBox.confirm('正在加载视频列表，请稍后...', null, function () {
+          clearInterval(timer1);
+          clearInterval(timer2);
+        });
         change_count++;
-        MessageBox.alert('正在加载视频列表，请稍后...');
+        not_change_count = 0;
       } else {
         not_change_count++;
       }
       old_h = h;
-      if (not_change_count > 6) {
+      if (not_change_count > 12) {
         clearInterval(timer1);
         clearInterval(timer2);
-        message_Message.info('视频列表加载结束');
         if (change_count > 0) {
+          message_Message.info('视频列表加载结束');
           download_all();
         }
       }
@@ -3181,10 +3218,12 @@ function open_ariang(rpc) {
   a.style.display = 'none';
   a.onclick = function () {
     window.bp_aria2_window = window.open(config_config.ariang_host);
-    setTimeout(function () {
-      // for safari
-      window.bp_aria2_window.location.href = config_config.ariang_host + hash_tag;
-    }, 500);
+    if (hash_tag) {
+      setTimeout(function () {
+        // for safari
+        window.bp_aria2_window.location.href = config_config.ariang_host + hash_tag;
+      }, 500);
+    }
   };
   document.body.appendChild(a);
   a.click();
@@ -3353,6 +3392,31 @@ function download_blob_merge(video_url, audio_url, filename) {
   }).finally(function () {
     download_blob_merge_clicked = false;
   });
+}
+
+/**
+ * api
+ */
+function download_api(url, filename) {
+  var api = config_config.download_api;
+  var api_sec = config_config.download_api_secret;
+  if (!api) {
+    message_Message.warning('请配置下载接口');
+    return;
+  }
+  var data = {
+    filename: filename,
+    ts: Date.now(),
+    url: url
+  };
+  ajax({
+    url: api,
+    type: 'POST',
+    data: api_sec ? getSignData(data, api_sec) : data
+  }).then(function (res) {
+    console.info('download_api res:', res);
+  });
+  message_Message.success('请求已发送');
 }
 
 /**
@@ -3608,6 +3672,8 @@ function download(url, filename, type) {
     download_blob(url, filename);
   } else if (type === 'rpc') {
     download_rpc(url, filename, null, rpc_type());
+  } else if (type === 'api') {
+    download_api(url, filename);
   }
 }
 var Download = {
@@ -3622,7 +3688,7 @@ var Download = {
 };
 ;// ./src/html/config.html
 // Module
-var config_code = "<div id=\"bp_config\"> <div class=\"config-mark\"></div> <div class=\"config-bg\"> <span style=\"font-size:20px;display:block;margin-bottom:15px\"> <b>bilibili视频下载 参数设置</b> <b> <a href=\"javascript:;\" id=\"reset_config\"> [重置] </a> <a style=\"text-decoration:underline\" href=\"javascript:;\" id=\"show_help\">&lt;通知/帮助&gt;</a> </b> </span> <div style=\"display:flex;gap:10px;height:480px\"> <div style=\"flex-shrink:0;border-right:1px solid #ddd;padding-right:10px;overflow-y:auto\"> <ul style=\"list-style:none;padding:0;margin:0;font-size:14px\"> <li><a href=\"javascript:;\" data-tab=\"basic\" class=\"tab-link active\">基本设置</a></li> <li><a href=\"javascript:;\" data-tab=\"download\" class=\"tab-link\">下载设置</a></li> <li><a href=\"javascript:;\" data-tab=\"other\" class=\"tab-link\">其他设置</a></li> </ul> </div> <div id=\"tab-content\" style=\"flex:1;overflow-y:auto;padding-left:10px;font-size:14px\"> <div class=\"tab-panel\" data-id=\"basic\"> <div style=\"margin:2% 0\"> <label>请求地址：</label> <input id=\"base_api\" style=\"width:40%\"/>&nbsp;&nbsp;&nbsp;&nbsp; <label>请求方式：</label> <select id=\"request_type\"> <option value=\"auto\">自动判断</option> <option value=\"local\">本地请求</option> <option value=\"remote\">远程请求</option> </select><br/> <small>注意：普通使用请勿修改；默认使用混合请求</small> </div> <div style=\"margin:2% 0\"> <label>视频格式：</label> <select id=\"format\"> <option value=\"mp4\">MP4</option> <option value=\"flv\">FLV</option> <option value=\"dash\">DASH</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>切换CDN：</label> <select id=\"host_key\"> {{host_key_options}} </select><br/> <small>注意：无法选择MP4清晰度；建议特殊地区或播放异常时切换（自行选择合适线路）</small> </div> <div style=\"margin:2% 0\"> <label>视频质量：</label> <select id=\"video_quality\"> {{video_quality_options}} </select><br/> <small>提示：脚本识别错误时可手动设置请求的视频质量参数</small> </div> <div style=\"margin:2% 0\"> <label>下载方式：</label> <select id=\"download_type\"> <option value=\"a\">URL链接</option> <option value=\"web\">Web请求</option> <option value=\"aria\">Aria2命令</option> <option value=\"blob\">Blob请求</option> <option value=\"blob_merge\">Blob合并</option> <option value=\"rpc\">RPC接口</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>AriaNg地址：</label> <input id=\"ariang_host\" style=\"width:40%\"/><br/> <small>提示：建议使用RPC请求下载；非HTTPS或非本地RPC域名使用AriaNg下载</small> </div> <div style=\"margin:2% 0\"> <label>RPC配置：[ 域名 : 端口 | 路径 | 密钥 ]</label> <a class=\"setting-context\" href=\"javascript:;\" id=\"ariang_sync_config\">同步至AriaNg</a><br/> <input id=\"rpc_domain\" placeholder=\"ws://192.168.1.1\" style=\"width:25%\"/> : <input id=\"rpc_port\" placeholder=\"6800\" style=\"width:10%\"/> | <input id=\"rpc_path\" placeholder=\"/jsonrpc\" style=\"width:20%\"/> | <input id=\"rpc_token\" placeholder=\"未设置不填\" style=\"width:15%;color:transparent\" onFocus=\"this.style.color='black';\" onBlur=\"this.style.color='transparent';\"/><br/> <small>注意：RPC默认使用Motrix（需要安装并运行）下载，其他软件请修改参数</small> </div> <div style=\"margin:2% 0\"> <label>自动下载：</label> <select id=\"auto_download\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select><br/> <small>说明：请求地址成功后将自动点击下载视频按钮</small> </div> <div style=\"margin:2% 0\"> <label>授权状态：</label> <select id=\"auth\" disabled=\"disabled\"> <option value=\"0\">未授权</option> <option value=\"1\">已授权</option> </select> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_login\">扫码授权</a> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_login_2\">网页授权</a> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_logout\">取消授权</a> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_login_help\">授权说明</a> </div> </div> <div class=\"tab-panel\" data-id=\"download\"> <div style=\"margin:2% 0\"> <label>RPC下载目录：</label> <input id=\"rpc_dir\" placeholder=\"留空使用默认目录\" style=\"width:70%\"/> </div> <div style=\"margin:2% 0\"> <label>AriaNg下载目录：</label> <input id=\"ariang_dir\" placeholder=\"留空使用默认目录\" style=\"width:70%\"/> </div> <div style=\"margin:2% 0\"> <span>[Aria2参数]</span><br/> <label>最大连接：</label> <select id=\"aria2c_connection_level\"> <option value=\"min\">1</option> <option value=\"mid\">8</option> <option value=\"max\">16</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>附加参数：</label> <input id=\"aria2c_addition_parameters\" placeholder=\"见Aria2c文档\" style=\"width:40%\"/><br/> <small>说明：用于配置Aria2命令下载方式的参数</small> </div> <div style=\"margin:2% 0\"> <label>提示启动Motrix：</label> <select id=\"show_motrix_confirm\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：使用RPC（POST）请求下载时，如果接口不通会弹窗提示是否启动Motrix</small> </div> <div style=\"margin:2% 0\"> <label>自动启动Motrix：</label> <select id=\"show_motrix_confirm_open_auto\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：启用提示启动Motrix时，不再弹窗提示，自动启动Motrix</small> </div> <div style=\"margin:2% 0\"> <label>自动滚动加载：</label> <select id=\"video_list_auto_scroll_load\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：批量下载时，收藏视频的视频列表可能因数量过多而未加载所有数据，只显示局部的视频数据</small> </div> </div> <div class=\"tab-panel\" data-id=\"other\" style=\"display:none\"> <div style=\"margin:2% 0\"> <label>强制换源：</label> <select id=\"replace_force\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>弹幕速度：</label> <input id=\"danmaku_speed\" style=\"width:10%\"/> s&nbsp;&nbsp;&nbsp;&nbsp; <label>弹幕字号：</label> <input id=\"danmaku_fontsize\" style=\"width:10%\"/> px&nbsp;&nbsp;&nbsp;&nbsp; <small>说明：使用请求到的视频地址在DPlayer进行播放；弹幕速度为弹幕滑过DPlayer的时间</small> </div> <div style=\"margin:2% 0\"> <label>UI超时时间：</label> <input id=\"show_ui_timeout\" style=\"width:10%\"> s <small>说明：脚本初始化时，超时没有正常显示UI的检查时间，数值填写正整数</small> </div> <div style=\"margin:2% 0\"> <label>UI加载提示：</label> <select id=\"show_ui_confirm\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：脚本初始化UI时，如果检测到页面异常会进行弹窗提示是否手动加载</small> </div> <div style=\"margin:2% 0\"> <label>UI强制加载：</label> <select id=\"show_ui_confirm_load_force\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：启用UI加载超时弹窗时，自动确认强制加载UI，可能导致页面异常</small> </div> </div> </div> </div> <div style=\"text-align:right;margin-top:20px\"> <button class=\"setting-button\" id=\"save_config\">确定</button> </div> </div> <style>#bp_config{opacity:0;display:none;position:fixed;inset:0px;top:0;left:0;width:100%;height:100%;z-index:10000}#bp_config .config-bg{position:absolute;background:#fff;border-radius:10px;padding:20px;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;max-width:90vw;max-height:90vh;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:10001}#bp_config .config-mark{width:100%;height:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,.5);z-index:10000}#bp_config .setting-button{width:120px;height:40px;border-width:0;border-radius:3px;background:#1e90ff;cursor:pointer;outline:0;color:#fff;font-size:17px}#bp_config .setting-button:hover{background:#59f}#bp_config .setting-context{margin:0 1%;color:#00f}#bp_config .setting-context:hover{color:red}#bp_config .tab-link{display:block;padding:8px 10px;margin:4px 0;border-radius:4px;color:#333;text-decoration:none;font-weight:500;transition:all .2s}#bp_config .tab-link:hover{background:#eef5ff}#bp_config .tab-link.active{background:#1e90ff;color:#fff}#bp_config small{color:#666;font-size:12px;margin-top:4px;display:block}#bp_config label{font-weight:500;min-width:60px;display:inline-block}#bp_config input,#bp_config select{padding:4px 6px;border:1px solid #ccc;border-radius:3px}#bp_config input:focus,#bp_config select:focus{border-color:#1e90ff;outline:0}</style> </div> ";
+var config_code = "<div id=\"bp_config\"> <div class=\"config-mark\"></div> <div class=\"config-bg\"> <span style=\"font-size:20px;display:block;margin-bottom:15px\"> <b>bilibili视频下载 参数设置</b> <b> <a href=\"javascript:;\" id=\"reset_config\"> [重置] </a> <a style=\"text-decoration:underline\" href=\"javascript:;\" id=\"show_help\">&lt;通知/帮助&gt;</a> </b> </span> <div style=\"display:flex;gap:10px;height:420px\"> <div style=\"flex-shrink:0;border-right:1px solid #ddd;padding-right:10px;overflow-y:auto\"> <ul style=\"list-style:none;padding:0;margin:0;font-size:14px\"> <li><a href=\"javascript:;\" data-tab=\"basic\" class=\"tab-link active\">基本设置</a></li> <li><a href=\"javascript:;\" data-tab=\"download\" class=\"tab-link\">下载设置</a></li> <li><a href=\"javascript:;\" data-tab=\"other\" class=\"tab-link\">其他设置</a></li> </ul> </div> <div id=\"tab-content\" style=\"flex:1;overflow-y:auto;padding-left:10px;font-size:14px\"> <div class=\"tab-panel\" data-id=\"basic\"> <div style=\"margin:2% 0\"> <label>请求地址：</label> <input id=\"base_api\" style=\"width:40%\"/>&nbsp;&nbsp;&nbsp;&nbsp; <label>请求方式：</label> <select id=\"request_type\"> <option value=\"auto\">自动判断</option> <option value=\"local\">本地请求</option> <option value=\"remote\">远程请求</option> </select><br/> <small>注意：普通使用请勿修改；默认使用混合请求</small> </div> <div style=\"margin:2% 0\"> <label>视频格式：</label> <select id=\"format\"> <option value=\"mp4\">MP4</option> <option value=\"flv\">FLV</option> <option value=\"dash\">DASH</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>切换CDN：</label> <select id=\"host_key\"> {{host_key_options}} </select><br/> <small>注意：无法选择MP4清晰度；建议特殊地区或播放异常时切换（自行选择合适线路）</small> </div> <div style=\"margin:2% 0\"> <label>自动下载：</label> <select id=\"auto_download\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>视频质量：</label> <select id=\"video_quality\"> {{video_quality_options}} </select><br/> <small>说明：请求地址成功后将自动点击下载视频按钮；脚本识别错误时可手动设置质量参数</small> </div> <div style=\"margin:2% 0\"> <label>下载方式：</label> <select id=\"download_type\"> <option value=\"a\">URL链接</option> <option value=\"web\">Web请求</option> <option value=\"aria\">Aria2命令</option> <option value=\"blob\">Blob请求</option> <option value=\"blob_merge\">Blob合并</option> <option value=\"rpc\">RPC接口</option> <option value=\"api\">API请求</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>AriaNg地址：</label> <input id=\"ariang_host\" style=\"width:40%\"/><br/> <small>提示：建议使用RPC请求下载；非HTTPS或非本地RPC域名使用AriaNg下载</small> </div> <div style=\"margin:2% 0\"> <label>RPC配置：[ 域名 : 端口 | 路径 | 密钥 ]</label> <a class=\"setting-context\" href=\"javascript:;\" id=\"ariang_sync_config\">同步至AriaNg</a><br/> <input id=\"rpc_domain\" placeholder=\"ws://192.168.1.1\" style=\"width:25%\"/> : <input id=\"rpc_port\" placeholder=\"6800\" style=\"width:10%\"/> | <input id=\"rpc_path\" placeholder=\"/jsonrpc\" style=\"width:20%\"/> | <input id=\"rpc_token\" placeholder=\"未设置不填\" style=\"width:15%;color:transparent\" onFocus=\"this.style.color='black';\" onBlur=\"this.style.color='transparent';\"/><br/> <small>注意：RPC默认使用Motrix（需要安装并运行）下载，其他软件请修改参数</small> </div> <div style=\"margin:2% 0\"> <label>授权状态：</label> <select id=\"auth\" disabled=\"disabled\"> <option value=\"0\">未授权</option> <option value=\"1\">已授权</option> </select> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_login\">扫码授权</a> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_login_2\">网页授权</a> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_logout\">取消授权</a> <a class=\"setting-context\" href=\"javascript:;\" id=\"show_login_help\">授权说明</a> </div> </div> <div class=\"tab-panel\" data-id=\"download\"> <div style=\"margin:2% 0\"> <label>RPC下载目录：</label> <input id=\"rpc_dir\" placeholder=\"留空使用默认目录\" style=\"width:70%\"/> </div> <div style=\"margin:2% 0\"> <label>AriaNg下载目录：</label> <input id=\"ariang_dir\" placeholder=\"留空使用默认目录\" style=\"width:70%\"/> </div> <div style=\"margin:2% 0\"> <span>[Aria2参数]</span><br/> <label>最大连接：</label> <select id=\"aria2c_connection_level\"> <option value=\"min\">1</option> <option value=\"mid\">8</option> <option value=\"max\">16</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>附加参数：</label> <input id=\"aria2c_addition_parameters\" placeholder=\"见Aria2c文档\" style=\"width:40%\"/><br/> <small>说明：用于配置Aria2命令下载方式的参数</small> </div> <div style=\"margin:2% 0\"> <span>API下载参数 [ 接口 | 密钥 ]</span> <a class=\"setting-context\" target=\"_blank\" href=\"https://github.com/injahow/idm-agent\">参考IDM-Agent</a><br/> <input id=\"download_api\" placeholder=\"自定义API下载接口\" style=\"width:40%\"/> | <input id=\"download_api_secret\" style=\"width:30%;color:transparent\" onFocus=\"this.style.color='black';\" onBlur=\"this.style.color='transparent';\"/><br/> <small>说明：接口为API下载方式请求地址，密钥用于服务端校验参数签名</small> </div> <div style=\"margin:2% 0\"> <label>提示启动Motrix：</label> <select id=\"show_motrix_confirm\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>自动启动Motrix：</label> <select id=\"show_motrix_confirm_open_auto\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：使用RPC（POST）请求下载时，支持弹窗提示是否启动Motrix；不再弹窗提示，自动启动Motrix</small> </div> <div style=\"margin:2% 0\"> <label>自动滚动加载：</label> <select id=\"video_list_auto_scroll_load\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：批量下载时，自动滚动播放列表触发更新，获取完整视频列表信息</small> </div> </div> <div class=\"tab-panel\" data-id=\"other\" style=\"display:none\"> <div style=\"margin:2% 0\"> <label>强制换源：</label> <select id=\"replace_force\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select>&nbsp;&nbsp;&nbsp;&nbsp; <label>弹幕速度：</label> <input id=\"danmaku_speed\" style=\"width:10%\"/> s&nbsp;&nbsp;&nbsp;&nbsp; <label>弹幕字号：</label> <input id=\"danmaku_fontsize\" style=\"width:10%\"/> px&nbsp;&nbsp;&nbsp;&nbsp; <small>说明：使用请求到的视频地址在DPlayer进行播放；弹幕速度为弹幕滑过DPlayer的时间</small> </div> <div style=\"margin:2% 0\"> <label>UI超时时间：</label> <input id=\"show_ui_timeout\" style=\"width:10%\"> s <small>说明：脚本初始化时，超时没有正常显示UI的检查时间，数值填写正整数</small> </div> <div style=\"margin:2% 0\"> <label>UI加载提示：</label> <select id=\"show_ui_confirm\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：脚本初始化UI时，如果检测到页面异常会进行弹窗提示是否手动加载</small> </div> <div style=\"margin:2% 0\"> <label>UI强制加载：</label> <select id=\"show_ui_confirm_load_force\"> <option value=\"0\">关闭</option> <option value=\"1\">开启</option> </select> <small>说明：启用UI加载超时弹窗时，自动确认强制加载UI，可能导致页面异常</small> </div> </div> </div> </div> <div style=\"text-align:right;margin-top:20px\"> <button class=\"setting-button\" id=\"save_config\">确定</button> </div> </div> <style>#bp_config{opacity:0;display:none;position:fixed;inset:0px;top:0;left:0;width:100%;height:100%;z-index:10000}#bp_config .config-bg{position:absolute;background:#fff;border-radius:10px;padding:20px;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;max-width:90vw;max-height:90vh;overflow:auto;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:10001}#bp_config .config-mark{width:100%;height:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,.5);z-index:10000}#bp_config .setting-button{width:120px;height:40px;border-width:0;border-radius:3px;background:#1e90ff;cursor:pointer;outline:0;color:#fff;font-size:17px}#bp_config .setting-button:hover{background:#59f}#bp_config .setting-context{margin:0 1%;color:#00f}#bp_config .setting-context:hover{color:red}#bp_config .tab-link{display:block;padding:8px 10px;margin:4px 0;border-radius:4px;color:#333;text-decoration:none;font-weight:500;transition:all .2s}#bp_config .tab-link:hover{background:#eef5ff}#bp_config .tab-link.active{background:#1e90ff;color:#fff}#bp_config small{color:#666;font-size:12px;margin-top:4px;display:block}#bp_config label{font-weight:500;min-width:60px;display:inline-block}#bp_config input,#bp_config select{padding:4px 6px;border:1px solid #ccc;border-radius:3px}#bp_config input:focus,#bp_config select:focus{border-color:#1e90ff;outline:0}</style> </div> ";
 // Exports
 /* harmony default export */ var config = (config_code);
 ;// ./src/js/ui/config.js
@@ -3660,6 +3726,8 @@ var config_config = {
   aria2c_addition_parameters: '',
   ariang_host: 'http://ariang.injahow.cn/',
   ariang_dir: '',
+  download_api: 'http://localhost:16880/download',
+  download_api_secret: '',
   auto_download: '0',
   video_quality: '0',
   danmaku_speed: '15',
@@ -3936,6 +4004,7 @@ function auth_toPrimitive(t, r) { if ("object" != auth_typeof(t) || !t) return t
 
 
 
+
 var Auth = /*#__PURE__*/function () {
   function Auth() {
     auth_classCallCheck(this, Auth);
@@ -3991,15 +4060,6 @@ var Auth = /*#__PURE__*/function () {
       store.set('pre_base_api', config_config.base_api);
     }
   }, {
-    key: "makeAPIData",
-    value: function makeAPIData(param, sec) {
-      return auth_objectSpread(auth_objectSpread({}, param), {}, {
-        sign: md5("".concat(Object.entries(param).map(function (e) {
-          return "".concat(e[0], "=").concat(e[1]);
-        }).join('&')).concat(sec))
-      });
-    }
-  }, {
     key: "_login",
     value: function _login(resolve) {
       var _this2 = this;
@@ -4011,7 +4071,7 @@ var Auth = /*#__PURE__*/function () {
       ajax({
         url: 'https://passport.bilibili.com/x/passport-tv-login/qrcode/auth_code',
         type: 'POST',
-        data: this.makeAPIData({
+        data: getSignData({
           appkey: this.TV_KEY,
           csrf: getCookie('bili_jct') || '',
           local_id: '0',
@@ -4064,7 +4124,7 @@ var Auth = /*#__PURE__*/function () {
           _ajax({
             url: "https://passport.bilibili.com/x/passport-tv-login/qrcode/poll",
             type: 'POST',
-            data: _this3.makeAPIData({
+            data: getSignData({
               appkey: _this3.TV_KEY,
               auth_code: auth_code,
               csrf: getCookie('bili_jct') || '',
@@ -4109,7 +4169,7 @@ var Auth = /*#__PURE__*/function () {
           _ajax({
             url: "https://passport.bilibili.com/x/passport-tv-login/qrcode/poll",
             type: 'POST',
-            data: _this4.makeAPIData({
+            data: getSignData({
               appkey: _this4.TV_KEY,
               auth_code: auth_code,
               csrf: getCookie('bili_jct') || '',
@@ -4643,7 +4703,7 @@ var Main = /*#__PURE__*/function () {
   function Main() {
     main_classCallCheck(this, Main);
     /* global JS_VERSION GIT_HASH */
-    console.log('\n'.concat(" %c bilibili-parse-download.user.js v", "2.9.1", " ").concat("9c7694a", " %c https://github.com/injahow/user.js ", '\n', '\n'), 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;');
+    console.log('\n'.concat(" %c bilibili-parse-download.user.js v", "2.9.2", " ").concat("90a6675", " %c https://github.com/injahow/user.js ", '\n', '\n'), 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;');
   }
   main_createClass(Main, [{
     key: "loadToolbar",
