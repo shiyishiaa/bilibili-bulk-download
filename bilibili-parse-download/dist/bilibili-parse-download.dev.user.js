@@ -618,7 +618,7 @@ var Video = /*#__PURE__*/function (_VideoBase) {
       if (this.epList.length && p) {
         return this.video_list[this.id(p)].cid;
       }
-      return this.state.cid || this.state.videoData.pages[this.id(p)].cid;
+      return (!p && this.state.cid) || this.state.videoData.pages[this.id(p)].cid;
     }
   }]);
   return Video;

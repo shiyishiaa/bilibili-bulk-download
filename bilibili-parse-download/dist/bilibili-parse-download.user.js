@@ -693,7 +693,7 @@
         }, {
             key: "cid",
             value: function cid(p) {
-                return this.epList.length && p ? this.video_list[this.id(p)].cid : this.state.cid || this.state.videoData.pages[this.id(p)].cid;
+                return this.epList.length && p ? this.video_list[this.id(p)].cid : (!p && this.state.cid) || this.state.videoData.pages[this.id(p)].cid;
             }
         } ]), Video;
     }(VideoBase), VideoList = function(_VideoBase2) {
